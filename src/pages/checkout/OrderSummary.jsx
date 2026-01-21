@@ -1,8 +1,7 @@
-import dayjs from "dayjs";
-import axios from "axios";
-import { formatMoney } from "../../utils/money";
-import { DeliveryOption } from "./DeliveryOptions";
-
+import axios from 'axios';
+import dayjs from 'dayjs';
+import { formatMoney } from '../../utils/money';
+import { DeliveryOptions } from './DeliveryOptions';
 
 export function OrderSummary({ cart, deliveryOptions, loadCart }) {
   return (
@@ -14,16 +13,9 @@ export function OrderSummary({ cart, deliveryOptions, loadCart }) {
           });
 
         const deleteCartItem = async () => {
-          if (cartItem.quantity > 1) {
-            await axios.put(`/api/cart-items/${cartItem.productId}`, {
-              quantity: cartItem.quantity - 1
-            });
-          } else {
-            await axios.delete(`/api/cart-items/${cartItem.productId}`);
-          }
+          await axios.delete(`/api/cart-items/${cartItem.productId}`);
           await loadCart();
         };
-
 
         return (
           <div key={cartItem.productId} className="cart-item-container">
@@ -56,7 +48,7 @@ export function OrderSummary({ cart, deliveryOptions, loadCart }) {
                 </div>
               </div>
 
-              <DeliveryOption cartItem={cartItem} deliveryOptions={deliveryOptions} loadCart={loadCart} />
+              <DeliveryOptions cartItem={cartItem} deliveryOptions={deliveryOptions} loadCart={loadCart} />
             </div>
           </div>
         );
