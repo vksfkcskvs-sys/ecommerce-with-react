@@ -13,8 +13,14 @@ export function OrderSummary({ cart, deliveryOptions, loadCart }) {
           });
 
         const deleteCartItem = async () => {
+          if (cartItem.quantity > 1) {
+            await axios.put(`/api/cart-items/${cartItem.productId}`, { quantity: cartItem.quantity - 1 });
+            await loadCart();
+            return;
+          } else {
           await axios.delete(`/api/cart-items/${cartItem.productId}`);
           await loadCart();
+          }
         };
 
         return (
